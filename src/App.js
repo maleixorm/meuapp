@@ -5,51 +5,45 @@ class App extends Component{
     constructor(props){
         super(props);
         this.state = {
+            nome: '',
             email: '',
             senha: '',
-            sexo: ''
+            error: ''
         };
-        this.trocaEmail = this.trocaEmail.bind(this);
-        this.trocaSenha = this.trocaSenha.bind(this);
-        this.trocaSexo = this.trocaSexo.bind(this);
+        this.cadastrar = this.cadastrar.bind(this);
     }
 
-    trocaEmail(e){
-        let valorDigitado = e.target.value;
-        this.setState({email: valorDigitado});
-    }
+    cadastrar(event){
+        const {nome, email, senha} = this.state;
 
-    trocaSenha(e){
-        let valorDigitado = e.target.value;
-        this.setState({senha: valorDigitado});
-    }
-
-    trocaSexo(e){
-        let valorDigitado = e.target.value;
-        this.setState({sexo: valorDigitado});
+        if (nome !== '' && email !== '' && senha !== '') {
+            alert(`Nome: ${nome} \n Email: ${email} \n Senha: ${senha}`);
+        } else {
+            this.setState({error: 'Ops! Parece que faltou preencher os campos do formulário!'});
+        }
+        
+        event.preventDefault();
     }
     
     render(){
         return(
             <div>
-                <h2>Login</h2>
-                <label for="email">Email:</label>
-                <input type='email' name='email' value={this.state.email} onChange={this.trocaEmail}/>
-                <br/><br/>
-                <label for='password'>Senha:</label>
-                <input type='password' name='senha' value={this.state.senha} onChange={this.trocaSenha} />
-                <br/><br/>
-                <label for='sexo'>Sexo:</label>
-                <select name='sexo' value={this.state.sexo} onChange={this.trocaSexo}>
-                    <option value='masculino'>Masculino</option>
-                    <option valie='feminino'>Feminino</option>
-                </select>
-                
-                <div>
-                    <h4>{this.state.email}</h4>
-                    <h4>{this.state.senha}</h4>
-                    <h4>{this.state.sexo}</h4>
-                </div>
+                <h1>Novo usuario</h1>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form onSubmit={this.cadastrar}>
+                    <label for='nome'>Nome:</label>
+                    <input type='text' name='nome' value={this.state.nome} onChange={(e) => this.setState({nome: e.target.value})}/><br/><br/>
+
+
+                    <label for='email'>Email:</label>
+                    <input type='email' name='email' value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}/><br/><br/>
+                    
+                    
+                    <label for='senha'>Senha:</label>
+                    <input type='password' name='senha' value={this.state.senha} onChange={(e) => this.setState({senha: e.target.value})}/><br/><br/>
+
+                    <button type='submit'>Cadastrar</button>
+                </form>
             </div>
         );
     }
