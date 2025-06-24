@@ -5,24 +5,34 @@ class App extends Component{
     constructor(props){
         super(props);
         this.state = {
-            hora: '00:00:00'
+            status: false
         };
+        
+        this.entrar = this.entrar.bind(this);
+        this.sair = this.sair.bind(this);
     }
 
-    componentDidMount() {
-        setInterval(() => {
-            this.setState({hora: new Date().toLocaleTimeString()})
-        }, 1000);
-    }
-
-    componentDidUpdate() {
-        console.log('Atualizou!');
+    entrar(){
+        this.setState({status: true});
     }
     
-    render() {
+    sair(){
+        this.setState({status: false});
+    }
+    
+    render(){
         return(
             <div>
-                <h1>Meu Projeto {this.state.hora}</h1>
+                {this.state.status ?
+                    <div>
+                        <h2>Bem-vindo ao sistema!</h2>
+                        <button onClick={this.sair}>Sair</button>
+                    </div> :
+                    <div>
+                        <h2>Olá visitante, faça o login!</h2>
+                        <button onClick={this.entrar}>Entrar</button>
+                    </div>
+                }
             </div>
         );
     }
