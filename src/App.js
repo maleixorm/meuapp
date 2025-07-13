@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 function App() {
     
@@ -11,17 +11,16 @@ function App() {
         if (tarefasStorage) {
             setTarefas(JSON.parse(tarefasStorage));
         }
-        return () => {}
     }, []);
     
     useEffect(() => {
         localStorage.setItem('tarefas', JSON.stringify(tarefas))
     }, [tarefas]);
 
-    function handleAdd() {
+    const handleAdd = useCallback(() => {
         setTarefas([...tarefas, input]);
         setInput(''); 
-    }
+    }, [input, tarefas]);
 
     const totalTarefas = useMemo(() => tarefas.length, [tarefas]);
     
